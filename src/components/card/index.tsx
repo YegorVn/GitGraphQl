@@ -1,18 +1,13 @@
 import React from "react";
 import "./index.scss";
+import { CardProps } from "../interfaces";
 
-interface UserData{
-    title: string
-}
 
-interface Props{
-    data: UserData
-}
-
-export const Index: React.FC<Props> = ({data}) => {
+export const Index: React.FC<CardProps> = ({data, className}) => {
+    console.log(data && data.name)
   return (
-    <div className="card">
-      <h3 className="card__title">{data.title}</h3>
+    <div className={`card ${className}`}>
+      <h3 className="card__title">{data.name}</h3>
       <div className="card__body"></div>
     </div>
   );

@@ -1,21 +1,26 @@
 import React from "react";
 import { Card } from "..";
+import "./index.scss";
+import { ListProps } from "../interfaces";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-interface UserData {
-  title: string;
-}
-
-interface Props {
-  items: Array<UserData>;
-  className: string
-}
-
-export const Index: React.FC<Props> = ({ items, className }) => {
+export const Index: React.FC<ListProps> = ({
+  items,
+  className,
+  loadMore,
+  hasNextPage,
+}) => {
   return (
-    <div className={`list ${className}`}>
-      {items.map((el) => {
-        return <Card data={el}/>;
-      })}
-    </div>
+    <InfiniteScroll
+      dataLength={items ? items.length : 0}
+      next={loadMore}
+      hasMore={hasNextPage}
+      loader={<p>Loading more...</p>}
+      className={`list ${className}`}>
+      {items &&
+        items.map((el) => {
+          return <Card key={el.id} data={el} className="list__card" />;
+        })}
+    </InfiniteScroll>
   );
 };
