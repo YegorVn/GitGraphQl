@@ -1,46 +1,63 @@
-.home{
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
+.home {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  width: 100%;
+  max-width: 65rem;
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+
+  &__title {
+    font-size: 4rem;
+    font-weight: 300;
+    margin: 25% 0 0 0;
+  }
+
+  &__subtitle {
+    margin: 0 0 0 0;
+    font-weight: 300;
+  }
+
+  &__search-block {
     width: 100%;
-    max-width: 65rem;
-    min-height: 100%;
-    margin: 0 auto;
+    margin: 2rem 0 0 0;
+  }
+
+  &__list {
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    margin: 1.5rem 0 0 0;
     padding: 0 2rem;
-
-    &__search-block{
-        width: 100%;
-        margin: 2rem 0 0 0;
-    }
-
-    &__list{
-        width: 100%;
-        margin: 1.5rem 0 0 0;
-    }
+  }
 }
 
-.search-block{
-    display: flex;
-    &__input{
-        width: 100%;
-        padding: 0.75rem 1.5rem;
-        border: 2px solid rgba(124, 124, 124, 0.416);
-        border-top-left-radius: 3rem;
-        border-bottom-left-radius: 3rem;
-        font-size: 1.5rem;
-    }
-    &__btn{
-        height: calc(3rem + 8px);
-        width: calc(3rem + 8px);
-        padding: 0;
-        border-top-right-radius: 3rem;
-        border-bottom-right-radius: 3rem;
-        border: 2px solid rgba(124, 124, 124, 0.416);
-        border-left: unset;
-        background-image: url("../../assets/icons/search-icon.webp");
-        background-size: 33%;
-        background-position: 45% center;
-        background-repeat: no-repeat;
-    }
+.search-block {
+  display: flex;
+  position: relative;
+  &__input {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid rgba(124, 124, 124, 0.416);
+    border-top-left-radius: 3rem;
+    border-bottom-left-radius: 3rem;
+    font-size: 1.5rem;
+  }
+  &__btn {
+    height: calc(3rem + 8px);
+    width: calc(3rem + 8px);
+    padding: 0;
+    border-top-right-radius: 3rem;
+    border-bottom-right-radius: 3rem;
+    border: 2px solid rgba(124, 124, 124, 0.416);
+    border-left: unset;
+    background-color: grey;
+    background-image: url("../../assets/icons/search-icon.webp");
+    background-size: 33%;
+    background-position: 45% center;
+    background-repeat: no-repeat;
+  }
 }

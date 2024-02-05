@@ -2,6 +2,8 @@
 export interface CardData {
   name: string;
   id: number;
+  stargazers: { totalCount: number };
+  url: string;
 }
 
 // Edge

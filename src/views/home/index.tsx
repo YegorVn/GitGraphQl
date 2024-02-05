@@ -6,26 +6,19 @@ import { useLazyQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { Edge } from "../../components/interfaces";
 
-const items = [
-  {
-    name: "фывдьфывдл",
-    id: 1,
-  },
-  {
-    name: "фывдьфывдл",
-    id: 2,
-  },
-];
-
 const GET_REPOSITORIES = gql`
-  query SearchRepositories($query: String!, $cursor: String) {
-    search(query: $query, type: REPOSITORY, first: 10, after: $cursor) {
+  query SearchRepositories($query: String!, $first: Int, $cursor: String) {
+    search(query: $query, type: REPOSITORY, first: $first, after: $cursor) {
       repositoryCount
       edges {
         node {
           ... on Repository {
             id
             name
+            stargazers {
+              totalCount
+            }
+            url
           }
         }
       }
@@ -39,7 +32,7 @@ const GET_REPOSITORIES = gql`
 
 export const Index: React.FC = () => {
   const [query, setQuery] = useState("");
-  const [getRepositories, { loading, data, fetchMore }] =
+  const [getRepositories, { loading, data, error, fetchMore }] =
     useLazyQuery(GET_REPOSITORIES);
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +40,7 @@ export const Index: React.FC = () => {
   };
 
   const handleChange = () => {
-    getRepositories({ variables: { query: query } });
+    getRepositories({ variables: { query: query, first: 10 } });
   };
 
   const loadMore = () => {
@@ -69,10 +62,14 @@ export const Index: React.FC = () => {
     }
   };
 
+  if (error) {
+    return <p></p>;
+  }
+
   return (
     <div className="home">
-      <h1>Поиск репозитория</h1>
-      <h4>C помощью GraphQL</h4>
+      <h1 className="home__title">Поиск репозитория</h1>
+      <h4 className="home__subtitle">C помощью GraphQL</h4>
       <div className="search-block home__search-block">
         <input
           value={query}
@@ -86,17 +83,23 @@ export const Index: React.FC = () => {
           type="button"
         />
       </div>
-      <List
-        items={
-          data &&
-          data.search.edges.map((el: Edge) => {
-            return el.node;
-          })
-        }
-        loadMore={loadMore}
-        hasNextPage={data && data.search.pageInfo.hasNextPage}
-        className="home__list"
-      />
+      {error ? (
+        <p>Error: {error}</p>
+      ) : (
+        <>
+          {loading && <p>Loading...</p>}
+          {data?.search && (
+            <List
+              items={data.search.edges.map((edge: Edge) => {
+                return edge.node;
+              })}
+              loadMore={loadMore}
+              hasNextPage={data.search.pageInfo.hasNextPage}
+              className="home__list"
+            />
+          )}
+        </>
+      )}
     </div>
   );
 };
